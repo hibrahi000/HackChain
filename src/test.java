@@ -6,6 +6,7 @@ public class test {
 				
 				@Override
 				public void run() {	
+					//OpenFrame of = new OpenFrame();
 					FileTransferMF FileTrans = new FileTransferMF();
 					
 				}

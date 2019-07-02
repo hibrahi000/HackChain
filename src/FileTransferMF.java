@@ -10,9 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.FileWriter;
-import java.util.Random;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,8 +18,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -48,9 +44,12 @@ public class FileTransferMF extends JFrame{
 	Cryptographer crypt = new Cryptographer();
 	
 
-ImageIcon transfer = new ImageIcon("/Users/hashmatibrahimi/eclipse-workspace/HackChain/src/blue.jpg");
-ImageIcon transGood = new ImageIcon("/Users/hashmatibrahimi/eclipse-workspace/HackChain/src/Green.jpg");
-ImageIcon transBad = new ImageIcon("/Users/hashmatibrahimi/eclipse-workspace/HackChain/src/red.jpg");
+ImageIcon transfer = new ImageIcon("/Users/hashmatibrahimi/eclipse-workspace/HackChain1/src/blue.jpg");
+ImageIcon transGood = new ImageIcon("/Users/hashmatibrahimi/eclipse-workspace/HackChain1/src/Green.jpg");
+ImageIcon transBad = new ImageIcon("/Users/hashmatibrahimi/eclipse-workspace/HackChain1/src/red.jpg");
+
+
+
 
 
 JFileChooser fc = new JFileChooser("Select file");
@@ -91,6 +90,7 @@ JButton btnEncrypt = new JButton("Encrypt and Transport");
 						String path = newF.getPath();
 						write(hash, newF);
 						fileName.setText(path);
+						
 						desktopOpen(newF);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -112,40 +112,40 @@ JButton btnEncrypt = new JButton("Encrypt and Transport");
 		public void actionPerformed(ActionEvent arg0) {
 			
 			boolean tryAgain = true;
-			//while (tryAgain) {
+			while (tryAgain) {
 				lblTrans.setIcon(transfer);
-				//setUserPrivateKey(JOptionPane.showInputDialog("Enter Private Key"));
-				String pkey = JOptionPane.showInputDialog("Enter Private Key");
-			//if(getUserPrivateKey().equals(getPrivateKey())==true) {
+				setUserPrivateKey(JOptionPane.showInputDialog("Enter Private Key"));
+			if(getUserPrivateKey().equals(getPrivateKey())==true) {
 				lblTrans.setIcon(transGood);
 			try {
 			
 				
 				File f = new File(fileName.getText());
-				write(crypt.decrypt(pkey, hash), f );
+				write(crypt.decrypt(privateKey, hash), f );
+			
 				desktopOpen(f);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//tryAgain = false;
-			//}
-//			else if(getUserPrivateKey().equals(getPrivateKey()) == false){
-//				lblTrans.setIcon(transBad);
-//				int repeat =JOptionPane.showConfirmDialog(null, "Sorry, \nWould you like to try again?");
-//				if(repeat == 0) {
-//					tryAgain =true;
-//					
-//				}
-//				else if(repeat == 1) {
-//				  tryAgain = false;
-//					
-//				  
-//				}
-//				
-//			}
-//			
-//			}
+			tryAgain = false;
+			}
+			else if(getUserPrivateKey().equals(getPrivateKey()) == false){
+				lblTrans.setIcon(transBad);
+				int repeat =JOptionPane.showConfirmDialog(null, "Sorry, \nWould you like to try again?");
+				if(repeat == 0) {
+					tryAgain =true;
+					
+				}
+				else if(repeat == 1) {
+				  tryAgain = false;
+					
+				  
+				}
+				
+			}
+			
+			}
 		}	
 		
 	});
@@ -218,12 +218,9 @@ JButton btnEncrypt = new JButton("Encrypt and Transport");
 	FileTransferME.add(send);
 	FileTransferME.add(btnRead);
 	FileTransferME.add(btnEncrypt);
-	
 	FileTransferME.add(clear);
 	//FileTransferME.add(display);
-	
 	FileTransferME.add(lblTrans, BorderLayout.PAGE_END);
-
 	
 	
 	
